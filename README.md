@@ -10,6 +10,8 @@
 
 My Arch + Hyprland setup. One wallpaper change re-themes the whole desktop through [matugen](https://github.com/InioX/matugen).
 
+![Desktop: bonsai, pipes, cava, fastfetch and btop over a matugen-themed Hyprland](assets/desktop.png)
+
 The Waybar layout started from [haikal-hakim/athena](https://github.com/haikal-hakim/athena). Thanks to Haikal for the modular bar.
 
 ## What's here

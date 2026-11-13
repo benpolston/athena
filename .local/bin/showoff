@@ -11,5 +11,5 @@ k "btop"
 k "cava"
 k "cbonsai -l -i -w 1 -L 40"
 k "pipes.sh -t 1 -R -r 4000 -p 4"
-k "NO_FETCH=1 fastfetch"
+k "fastfetch; exec sleep infinity"
 hyprctl dispatch "hl.dsp.focus({ workspace = $ws })" >/dev/null
