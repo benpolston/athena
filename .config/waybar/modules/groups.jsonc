@@ -24,7 +24,6 @@
   },
   "group/tray-group": {
     "orientation": "horizontal",
-    "drawer": { "transition-duration": 500, "transition-left-to-right": false },
-    "modules": ["custom/tray-arrow", "tray"]
+    "modules": ["custom/tray-arrow"]
   }
 }

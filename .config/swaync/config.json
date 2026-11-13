@@ -1,0 +1,106 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "layer": "overlay",
+  "control-center-layer": "top",
+  "keyboard-shortcuts": true,
+  "transition-time": 200,
+  "hide-on-clear": false,
+  "hide-on-action": true,
+  "time-format": "%H:%M",
+  "positionX": "right",
+  "positionY": "top",
+  "fit-to-screen": true,
+  "control-center-width": 380,
+  "control-center-height": 0,
+  "control-center-margin-top": 8,
+  "control-center-margin-bottom": 8,
+  "control-center-margin-right": 8,
+  "control-center-margin-left": 0,
+  "notification-window-width": 380,
+  "notification-icon-size": 48,
+  "notification-body-image-height": 120,
+  "notification-body-image-width": 200,
+  "timeout": 8,
+  "timeout-low": 4,
+  "timeout-critical": 0,
+  "widgets": [
+    "title",
+    "dnd",
+    "buttons-grid",
+    "volume",
+    "backlight",
+    "mpris",
+    "notifications"
+  ],
+  "widget-config": {
+    "title": {
+      "text": "Notifications",
+      "clear-all-button": true,
+      "button-text": "Clear All"
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "󰤨",
+          "tooltip": "Wi-Fi",
+          "command": "sh -c 'swaync-client -cp; kitty --class nmtui-float -e nmtui'"
+        },
+        {
+          "label": "󰖂",
+          "tooltip": "Tailscale on/off",
+          "command": "~/.local/bin/waybar-tailscale toggle"
+        },
+        {
+          "label": "󰂯",
+          "tooltip": "Bluetooth",
+          "command": "sh -c 'swaync-client -cp; blueman-manager'"
+        },
+        {
+          "label": "󰌾",
+          "tooltip": "Lock",
+          "command": "sh -c 'swaync-client -cp; pidof hyprlock || hyprlock'"
+        },
+        {
+          "label": "󰹑",
+          "tooltip": "Screenshot + annotate",
+          "command": "sh -c 'swaync-client -cp; sleep 0.4; ~/.local/bin/screenshot-edit'"
+        },
+        {
+          "label": "󰑋",
+          "tooltip": "Record region",
+          "command": "sh -c 'swaync-client -cp; sleep 0.4; ~/.local/bin/screen-record'"
+        },
+        {
+          "label": "󰸉",
+          "tooltip": "Wallpaper picker",
+          "command": "sh -c 'swaync-client -cp; ~/.local/bin/wallpaper-picker'"
+        },
+        {
+          "label": "󰈊",
+          "tooltip": "Colour picker",
+          "command": "sh -c 'swaync-client -cp; sleep 0.4; c=$(hyprpicker -a -f hex) && notify-send -a Colour \"Copied $c\"'"
+        },
+        {
+          "label": "󰎆",
+          "tooltip": "Sidra (Apple Music)",
+          "command": "sh -c 'swaync-client -cp; sidra'"
+        }
+      ]
+    },
+    "volume": {
+      "label": "󰕾",
+      "show-per-app": false
+    },
+    "backlight": {
+      "label": "󰃠",
+      "device": "intel_backlight"
+    },
+    "mpris": {
+      "image-size": 56,
+      "blur": true
+    }
+  }
+}

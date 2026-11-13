@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Fill a workspace with eye-candy terminals: btop, cava, bonsai, pipes, fastfetch.
+#   showoff        -> workspace 9
+#   showoff 7      -> workspace 7
+ws=${1:-9}
+k() {   # open a kitty running $1 on workspace $ws without stealing focus
+  hyprctl dispatch "hl.dsp.exec_cmd([[kitty -o font_size=10 --hold sh -c '$1']], { workspace = '$ws silent' })" >/dev/null
+  sleep 0.4
+}
+k "btop"
+k "cava"
+k "cbonsai -l -i -w 1 -L 40"
+k "pipes.sh -t 1 -R -r 4000 -p 4"
+k "NO_FETCH=1 fastfetch"
+hyprctl dispatch "hl.dsp.focus({ workspace = $ws })" >/dev/null

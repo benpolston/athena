@@ -35,6 +35,13 @@ alias grep='grep --color=auto'
 # CTF helpers (bash-compatible)
 [ -f ~/.config/bash/ctf.sh ] && source ~/.config/bash/ctf.sh
 
+# Terminal toys
+alias bonsai='cbonsai -l -i'          # grow a live bonsai tree (q to quit)
+alias aquarium='asciiquarium'
+alias pipes='pipes.sh -t 1 -R'
+alias matrix='cmatrix -ab -u 3'
+# showoff  -> fills workspace 9 with btop, cava, bonsai, pipes, fastfetch
+
 # Plugins
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)

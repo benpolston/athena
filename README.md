@@ -18,12 +18,16 @@ The Waybar layout started from [haikal-hakim/athena](https://github.com/haikal-h
 .config/
 ├── hypr/       # Hyprland (Lua config), hyprlock, hypridle
 ├── waybar/     # modular bar, with a Tailscale toggle in the connections drawer
-├── matugen/    # templates: waybar, wofi, mako, hyprlock, borders, kitty, cava
+├── matugen/    # templates: waybar, wofi, swaync, hyprlock, borders, kitty, cava,
+│               #   GTK, KDE/Dolphin, Neovim, SDDM login, Sidra (Apple Music)
 ├── wofi/       # launcher, keybind cheatsheet, wallpaper picker
 ├── kitty/      # JetBrainsMono Nerd Font, translucent, matugen colors
-├── mako/       # notifications
+├── swaync/     # notification centre with quick-action buttons
+├── nvim/       # LazyVim, coloured from the wallpaper
+├── sddm/       # login theme matching hyprlock + one-time root setup script
 ├── kanshi/     # laptop / docked display profiles
-├── fastfetch/  starship.toml  btop/  cava/  satty/  thefuck/
+├── fastfetch/  # plus custom ASCII art in logos/ (try `fflogos`)
+├── starship.toml  btop/  cava/  satty/  thefuck/
 └── bash/ctf.sh # CTF helpers, sourced from .zshrc
 .local/bin/     # wallpaper, lock screen, screenshot, Tailscale and menu scripts
 .zshrc          # zsh + autosuggestions, syntax highlighting, starship
@@ -38,15 +42,34 @@ The Waybar layout started from [haikal-hakim/athena](https://github.com/haikal-h
 | `Super + Escape` | Lock screen with a clock, greeting, profile picture, now playing, battery and fingerprint unlock |
 | `Super + Print` | Screenshot a region and annotate it in satty |
 | `Super + Shift + C` | Color picker that copies the hex code |
+| `Super + Tab` | Workspace overview (Hyprspace plugin) |
+| `Super + N` | Notification centre |
+| `Super + Shift + R` / `Super + Ctrl + R` | Record a region / the screen (again = stop) |
+| `Super + Shift + B` | Rearrange the notification centre's buttons |
 | `Super + /` | Cheatsheet of every keybind, read live from Hyprland |
+
+`showoff` fills a workspace with btop, cava, cbonsai, pipes and fastfetch.
 
 ## Packages
 
 ```sh
-sudo pacman -S hyprland hyprlock hypridle waybar wofi kitty mako kanshi awww matugen \
+sudo pacman -S hyprland hyprpm hyprlock hypridle waybar wofi kitty swaync kanshi awww matugen \
   zsh zsh-autosuggestions zsh-syntax-highlighting zsh-completions starship thefuck \
-  fastfetch btop cava satty grim slurp hyprpicker playerctl jq ffmpeg tailscale \
-  ttf-jetbrains-mono-nerd
+  fastfetch btop cava satty grim slurp hyprpicker wf-recorder playerctl jq ffmpeg tailscale \
+  neovim lazygit ripgrep fd nodejs npm tree-sitter-cli plymouth adw-gtk-theme \
+  asciiquarium cmatrix ttf-jetbrains-mono-nerd
+yay -S cbonsai pipes.sh sidra-bin
+
+# plugins
+hyprpm update
+hyprpm add https://github.com/KZDKM/Hyprspace && hyprpm enable Hyprspace
+hyprpm add https://github.com/virtcode/hypr-dynamic-cursors && hyprpm enable dynamic-cursors
+```
+
+Login screen + boot splash (backs up the current boot image first; `--undo` reverts):
+
+```sh
+sudo ~/.config/sddm/setup-login-boot.sh
 ```
 
 ## Install

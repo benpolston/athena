@@ -1,0 +1,10 @@
+{
+  "custom/recording": {
+    "exec": "~/.local/bin/screen-record status",
+    "return-type": "json",
+    "interval": 1,
+    "signal": 9,
+    "hide-empty-text": true,
+    "on-click": "~/.local/bin/screen-record"
+  }
+}

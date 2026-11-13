@@ -4,9 +4,9 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-CONFIG_DIRS=(hypr waybar wofi kitty mako matugen kanshi fastfetch btop satty bash)
+CONFIG_DIRS=(hypr waybar wofi kitty swaync matugen kanshi fastfetch btop satty bash sddm nvim)
 CONFIG_FILES=(starship.toml cava/config thefuck/settings.py)
-BIN=(cycle-wallpaper wallpaper-picker screenshot-edit lock-info waybar-tailscale cheatsheet power-menu)
+BIN=(cycle-wallpaper wallpaper-picker screenshot-edit lock-info waybar-tailscale cheatsheet power-menu screen-record showoff apply-kde-colors fflogos panel-buttons)
 HOME_FILES=(.zshrc)
 
 for d in "${CONFIG_DIRS[@]}"; do
@@ -23,6 +23,6 @@ for f in "${BIN[@]}"; do cp -a "$HOME/.local/bin/$f" ".local/bin/$f"; done
 for f in "${HOME_FILES[@]}"; do cp -a "$HOME/$f" "$f"; done
 
 # Drop backups, caches and the retired hyprpaper config
-find .config \( -name '*.bak' -o -name '*.orig' -o -name '__pycache__' -o -name 'hyprpaper.conf' \) -prune -exec rm -rf {} +
+find .config \( -name '*.bak' -o -name '*.bak[0-9]*' -o -name '*.orig' -o -name '__pycache__' -o -name 'hyprpaper.conf' -o -name '*.pre-extras' \) -prune -exec rm -rf {} +
 
 echo "Synced. Review with: git status"

@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+"""Copy the matugen KDE colour scheme into kdeglobals so Dolphin & other KDE apps follow the wallpaper."""
+import configparser, os
+home = os.path.expanduser("~")
+scheme_path = f"{home}/.local/share/color-schemes/Matugen.colors"
+globals_path = f"{home}/.config/kdeglobals"
+
+def load(path):
+    c = configparser.ConfigParser(interpolation=None, strict=False)
+    c.optionxform = str
+    c.read(path)
+    return c
+
+scheme, kg = load(scheme_path), load(globals_path)
+for s in list(kg.sections()):
+    if s.startswith(("Colors:", "ColorEffects:")):
+        kg.remove_section(s)
+for s in scheme.sections():
+    if s.startswith(("Colors:", "ColorEffects:")):
+        kg[s] = dict(scheme[s])
+if not kg.has_section("General"):
+    kg.add_section("General")
+kg["General"]["ColorScheme"] = "Matugen"
+with open(globals_path, "w") as f:
+    kg.write(f, space_around_delimiters=False)

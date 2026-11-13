@@ -412,7 +412,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("awww-daemon")
     hl.exec_cmd("kanshi")
     hl.exec_cmd("waybar")
-    hl.exec_cmd("mako")
+    hl.exec_cmd("swaync")
+    hl.exec_cmd("hyprpm reload -n")   -- load plugins (Hyprspace, dynamic-cursors)
     hl.exec_cmd("hypridle")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
@@ -457,3 +458,50 @@ hl.config({
     },
 })
 -- <<< thinkpad-extras <<<
+
+-- >>> extras-2 >>>
+
+-- Notification centre (swaync)
+hl.bind("SUPER + N", hl.dsp.exec_cmd("swaync-client -t -sw"), { description = "Notification centre" })
+hl.bind("SUPER + SHIFT + N", hl.dsp.exec_cmd("swaync-client -d -sw"), { description = "Toggle Do Not Disturb" })
+
+-- Screen recording (press again to stop)
+hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("~/.local/bin/screen-record"),      { description = "Record region (again = stop)" })
+hl.bind("SUPER + CTRL + R",  hl.dsp.exec_cmd("~/.local/bin/screen-record full"), { description = "Record screen (again = stop)" })
+
+-- Workspace overview: Hyprspace plugin (hyprpm). Super+Tab, or swipe vertically with 3 fingers.
+hl.bind("SUPER + TAB", function()
+    if hl.plugin.overview then hl.plugin.overview.toggle() end
+end, { description = "Workspace overview" })
+
+if hl.plugin.overview then
+    hl.config({ plugin = { overview = {
+        panelColor                  = c.surface      or "rgba(1e1e2ecc)",
+        panelBorderColor            = c.outline      or "rgba(59595988)",
+        workspaceActiveBackground   = c.surface_high or "rgba(313244cc)",
+        workspaceInactiveBackground = c.surface      or "rgba(1e1e2ecc)",
+        workspaceActiveBorder       = c.primary      or "rgb(cba6f7)",
+        workspaceInactiveBorder     = c.outline      or "rgba(59595988)",
+        panelHeight                 = 220,
+        workspaceBorderSize         = 2,
+        centerAligned               = true,
+        hideRealLayers              = false,
+        affectStrut                 = true,
+        autoDrag                    = true,
+        showNewWorkspace            = true,
+        showEmptyWorkspace          = false,
+    }}})
+end
+
+-- Animated cursor: dynamic-cursors plugin (hyprpm). Shake the mouse to find the cursor.
+-- Don't like it? Run:  hyprpm disable dynamic-cursors
+if hl.plugin.dynamic_cursors then
+    hl.config({ plugin = { dynamic_cursors = {
+        enabled = true,
+        mode    = "tilt",          -- tilt | rotate | stretch | none
+        shake   = { enabled = true, timeout = 2000 },
+    }}})
+end
+-- Rearrange the notification panel's buttons
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("~/.local/bin/panel-buttons"), { description = "Rearrange panel buttons" })
+-- <<< extras-2 <<<

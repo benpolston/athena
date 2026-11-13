@@ -31,3 +31,8 @@
 }
 
 #pulseaudio.source-muted { color: #f38ba8; }
+
+#custom-recording.recording {
+  color: #f38ba8;
+  font-weight: bold;
+}

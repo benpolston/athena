@@ -15,10 +15,10 @@ method = noncurses
 [color]
 background = default
 gradient = 1
-gradient_color_1 = '#cac1e9'
+gradient_color_1 = '#cac1ea'
 gradient_color_2 = '#b5c9d7'
-gradient_color_3 = '#90cef4'
-gradient_color_4 = '#c4e7ff'
+gradient_color_3 = '#8fcef3'
+gradient_color_4 = '#c3e8ff'
 
 [smoothing]
 noise_reduction = 77

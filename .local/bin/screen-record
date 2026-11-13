@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Screen recording toggle (wf-recorder). Run again to stop.
+#   screen-record          -> select a region (or click a window)
+#   screen-record full     -> whole focused monitor
+#   screen-record status   -> JSON for the Waybar indicator
+dir="$HOME/Videos/Recordings"
+state="${XDG_RUNTIME_DIR:-/tmp}/screen-record.path"
+
+refresh() { pkill -RTMIN+9 waybar; }
+
+if [[ $1 == status ]]; then
+  if pgrep -x wf-recorder >/dev/null; then
+    start=$(stat -c %Y "$state" 2>/dev/null || date +%s)
+    secs=$(( $(date +%s) - start ))
+    printf '{"text":"󰑋 %d:%02d","tooltip":"Recording. Click to stop","class":"recording"}\n' $((secs/60)) $((secs%60))
+  else
+    echo '{"text":"","class":"idle"}'
+  fi
+  exit
+fi
+
+# Already recording -> stop
+if pgrep -x wf-recorder >/dev/null; then
+  pkill -INT -x wf-recorder
+  sleep 0.5; refresh
+  file=$(cat "$state" 2>/dev/null); rm -f "$state"
+  [[ -n $file ]] && wl-copy -t text/uri-list "file://$file"
+  action=$(notify-send -a "Screen recorder" -i media-record "Recording saved" "${file/#$HOME/\~}" -A open=Open -A folder="Show folder")
+  case $action in
+    open)   xdg-open "$file" ;;
+    folder) xdg-open "$dir" ;;
+  esac
+  exit
+fi
+
+mkdir -p "$dir"
+file="$dir/rec-$(date +%F_%H-%M-%S).mp4"
+args=()
+if [[ $1 == full ]]; then
+  args=(-o "$(hyprctl activeworkspace -j | jq -r .monitor)")
+else
+  region=$(slurp -d -b '#00000066' -c '#ff5555ff' -w 2) || exit 0
+  args=(-g "$region")
+fi
+
+echo "$file" > "$state"
+notify-send -a "Screen recorder" -i media-record -t 1500 "Recording started" "Press the same key again (or click the red dot) to stop"
+sleep 1.6
+wf-recorder "${args[@]}" -c libx264 -p preset=veryfast -p crf=23 -f "$file" >/dev/null 2>&1 &
+sleep 0.3; refresh

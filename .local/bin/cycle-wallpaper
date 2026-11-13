@@ -32,5 +32,11 @@ awww img "$next" --resize crop \
   --transition-type grow --transition-pos "${pos:-center}" --invert-y \
   --transition-duration 1.2 --transition-fps 60 --transition-bezier .43,1.19,1,.4
 
+# Login screen (SDDM) uses the same wallpaper + avatar; dir is created by the one-time root setup
+if [[ -w /var/lib/hyprsddm ]]; then
+  cp -f "$next" /var/lib/hyprsddm/wallpaper
+  [[ ~/.face -nt /var/lib/hyprsddm/face.png ]] && cp -f ~/.face /var/lib/hyprsddm/face.png
+fi
+
 # Regenerate bar / menu / notification / lock / border / terminal colours
 command -v matugen >/dev/null && matugen image "$next" -m dark --prefer saturation >/dev/null 2>&1 &

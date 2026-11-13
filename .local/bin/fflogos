@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Preview fastfetch logos one at a time. Enter = next, q = quit.
+#   fflogos            -> custom art + a few built-ins
+#   fflogos NAME       -> just that one
+#   fflogos set NAME   -> make it the default
+dir="$HOME/.config/fastfetch/logos"
+cfg="$HOME/.config/fastfetch/config.jsonc"
+colors='--logo-color-1 blue --logo-color-2 white --logo-color-3 yellow --logo-color-4 magenta'
+show() {
+  if [[ -f $dir/$1.txt ]]; then fastfetch --logo-type file --logo "$dir/$1.txt" $colors
+  else fastfetch -l "$1"; fi
+}
+if [[ $1 == set ]]; then
+  [[ -n $2 ]] || { echo "usage: fflogos set NAME"; exit 1; }
+  if [[ -f $dir/$2.txt ]]; then
+    logo="{ \"type\": \"file\", \"source\": \"~/.config/fastfetch/logos/$2.txt\", \"color\": { \"1\": \"blue\", \"2\": \"white\", \"3\": \"yellow\", \"4\": \"magenta\" }, \"padding\": { \"top\": 1, \"left\": 1, \"right\": 3 } }"
+  else
+    logo="{ \"source\": \"$2\", \"padding\": { \"top\": 1, \"right\": 3 } }"
+  fi
+  sed -i "s|^  \"logo\": .*|  \"logo\": $logo,|" "$cfg"
+  echo "Default fastfetch logo is now: $2"; exit
+fi
+if [[ -n $1 ]]; then show "$1"; exit; fi
+for n in wizard skull astronaut arch arch3 Archcraft arch_old linux; do
+  clear; echo "── $n ──"; show "$n"
+  read -rsn1 -p "Enter: next   q: quit   s: set as default " k; echo
+  [[ $k == q ]] && break
+  [[ $k == s ]] && { "$0" set "$n"; break; }
+done

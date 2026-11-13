@@ -10,10 +10,6 @@ post_hook   = "pkill -SIGUSR2 waybar"
 input_path  = "~/.config/matugen/templates/colors.css"
 output_path = "~/.config/wofi/colors.css"
 
-[templates.mako]
-input_path  = "~/.config/matugen/templates/mako.conf"
-output_path = "~/.config/mako/config"
-post_hook   = "makoctl reload"
 
 [templates.hyprlock]
 input_path  = "~/.config/matugen/templates/hyprlock-colors.conf"
@@ -42,3 +38,34 @@ cyan    = "#56b6c2"
 input_path  = "~/.config/matugen/templates/cava.conf"
 output_path = "~/.config/cava/config"
 post_hook   = "pkill -USR1 cava || true"
+
+[templates.gtk3]
+input_path  = "~/.config/matugen/templates/gtk.css"
+output_path = "~/.config/gtk-3.0/gtk.css"
+
+[templates.gtk4]
+input_path  = "~/.config/matugen/templates/gtk.css"
+output_path = "~/.config/gtk-4.0/gtk.css"
+
+[templates.kde]
+input_path  = "~/.config/matugen/templates/kde.colors"
+output_path = "~/.local/share/color-schemes/Matugen.colors"
+post_hook   = "~/.local/bin/apply-kde-colors"
+
+[templates.swaync]
+input_path  = "~/.config/matugen/templates/swaync-colors.css"
+output_path = "~/.config/swaync/tokens/variables.css"
+post_hook   = "swaync-client -rs >/dev/null 2>&1 || true"
+
+[templates.sddm]
+input_path  = "~/.config/matugen/templates/sddm.conf"
+output_path = "/var/lib/hyprsddm/theme.conf.user"
+
+[templates.sidra]
+input_path  = "~/.config/matugen/templates/sidra.json"
+output_path = "~/.config/Sidra/custom-theme.json"
+
+[templates.nvim]
+input_path  = "~/.config/matugen/templates/nvim-colors.lua"
+output_path = "~/.config/nvim/lua/matugen-colors.lua"
+post_hook   = "pkill -USR1 -x nvim || true"

@@ -109,3 +109,10 @@
 #tray>.needs-attention {
   -gtk-icon-effect: none;
 }
+
+#custom-recording {
+  margin: 4px 5px;
+  padding: 0 12px;
+  background-color: @surface_container;
+  border-radius: 20px;
+}
