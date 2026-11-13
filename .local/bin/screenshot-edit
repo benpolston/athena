@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Select a region (or click a window), then annotate it in satty.
+# In satty: Enter = copy to clipboard and close, Ctrl+S = save to ~/Pictures/Screenshots
+region=$(slurp -d -b '#00000066' -c '#ffffffcc' -w 2) || exit 0
+grim -g "$region" - | satty --filename -

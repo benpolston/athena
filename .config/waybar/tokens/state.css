@@ -18,6 +18,7 @@
 }
 
 #network.disabled,
+#custom-tailscale.disconnected,
 #cpu.critical,
 #disk.critical,
 #memory.critical,
@@ -28,3 +29,5 @@
 #custom-tray-arrow.dnd-inhibited-notification {
   color: #f38ba8;
 }
+
+#pulseaudio.source-muted { color: #f38ba8; }

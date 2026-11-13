@@ -2,6 +2,43 @@
 reload_apps = false
 
 [templates.waybar]
-input_path = "~/.config/matugen/templates/waybar-colors.css"
+input_path  = "~/.config/matugen/templates/colors.css"
 output_path = "~/.config/waybar/tokens/colors.css"
-post_hook = "pkill -SIGUSR2 waybar"
+post_hook   = "pkill -SIGUSR2 waybar"
+
+[templates.wofi]
+input_path  = "~/.config/matugen/templates/colors.css"
+output_path = "~/.config/wofi/colors.css"
+
+[templates.mako]
+input_path  = "~/.config/matugen/templates/mako.conf"
+output_path = "~/.config/mako/config"
+post_hook   = "makoctl reload"
+
+[templates.hyprlock]
+input_path  = "~/.config/matugen/templates/hyprlock-colors.conf"
+output_path = "~/.config/hypr/hyprlock-colors.conf"
+
+[templates.hyprland]
+input_path  = "~/.config/matugen/templates/hypr-colors.lua"
+output_path = "~/.config/hypr/colors.lua"
+post_hook   = "hyprctl reload"
+
+[templates.kitty]
+input_path  = "~/.config/matugen/templates/kitty-colors.conf"
+output_path = "~/.config/kitty/colors.conf"
+post_hook   = "pkill -SIGUSR1 kitty"
+
+# Fixed terminal hues, nudged ("harmonized") toward the wallpaper's colour.
+[config.custom_colors]
+red     = "#e06c75"
+green   = "#98c379"
+yellow  = "#e5c07b"
+blue    = "#61afef"
+magenta = "#c678dd"
+cyan    = "#56b6c2"
+
+[templates.cava]
+input_path  = "~/.config/matugen/templates/cava.conf"
+output_path = "~/.config/cava/config"
+post_hook   = "pkill -USR1 cava || true"

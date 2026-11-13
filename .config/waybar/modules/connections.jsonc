@@ -1,24 +1,17 @@
 {
   "network": {
     "format-wifi": "{icon}",
-    "format-ethernet": "",
+    "format-ethernet": "",
     "format-linked": "󱘖",
     "format-disconnected": "󰤣",
     "format-disabled": "󰤮",
-    "format-icons": [
-      "󰤯",
-      "󰤟",
-      "󰤢",
-      "󰤥",
-      "󰤨"
-    ],
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     "tooltip-format-disconnected": "No Connection",
     "tooltip-format-disabled": "Wi-Fi is OFF",
-    "tooltip-format-wifi": "󱄙  {essid} ({signalStrength}%)\n\n󰐻  Freq: {frequency}GHz\n  {bandwidthDownBytes}   {bandwidthUpBytes}",
-    "tooltip-format-ethernet": "󰈀  {ifname} (Connected)\n  {bandwidthDownBytes}   {bandwidthUpBytes}",
+    "tooltip-format-wifi": "󱄙  {essid} ({signalStrength}%)\n\n󰐻  Freq: {frequency}GHz\n  {bandwidthDownBytes}   {bandwidthUpBytes}",
+    "tooltip-format-ethernet": "󰈀  {ifname} (Connected)\n  {bandwidthDownBytes}   {bandwidthUpBytes}",
     "tooltip-format-linked": "󱘖 {ifname}: No IP Address",
-    "on-click": "nm-applet --indicator",
-    "on-click-right": "pkill nm-applet",
+    "on-click": "kitty --class nmtui-float -e nmtui",
     "on-scroll-up": "nmcli radio wifi on",
     "on-scroll-down": "nmcli radio wifi off"
   },
@@ -31,5 +24,13 @@
     "tooltip-format-enumerate-connected-battery": "󰂱  {device_alias} (󰠠  {device_battery_percentage}%)",
     "on-click": "blueman-manager",
     "on-click-right": "rfkill toggle bluetooth"
+  },
+  "custom/tailscale": {
+    "exec": "~/.local/bin/waybar-tailscale",
+    "return-type": "json",
+    "interval": 15,
+    "signal": 8,
+    "on-click": "~/.local/bin/waybar-tailscale toggle",
+    "on-click-right": "xdg-open https://login.tailscale.com/admin/machines"
   }
 }

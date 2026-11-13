@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Small text snippets for hyprlock labels.
+case "$1" in
+  battery)
+    b=/sys/class/power_supply/BAT0
+    cap=$(<"$b/capacity"); st=$(<"$b/status")
+    icons=(󰂎 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹)
+    icon=${icons[cap/10]}
+    [[ $st == Charging ]] && icon=󰂄
+    [[ $st == Full || $st == "Not charging" ]] && icon=󰚥
+    echo "$icon  $cap%"
+    ;;
+  media)
+    st=$(playerctl status 2>/dev/null) || exit 0
+    [[ $st == Playing || $st == Paused ]] || exit 0
+    meta=$(playerctl metadata --format '{{ trunc(title, 40) }}{{ " — " }}{{ trunc(artist, 25) }}' 2>/dev/null)
+    meta=${meta% — }
+    [[ -n $meta ]] || exit 0
+    [[ $st == Playing ]] && icon=󰎈 || icon=󰏤
+    echo "$icon  $meta"
+    ;;
+  greeting)
+    h=$(date +%H)
+    if   (( 10#$h < 5 ));  then g="Up late"
+    elif (( 10#$h < 12 )); then g="Good morning"
+    elif (( 10#$h < 18 )); then g="Good afternoon"
+    else                         g="Good evening"; fi
+    echo "$g, $(id -un)"
+    ;;
+esac

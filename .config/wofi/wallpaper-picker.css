@@ -1,0 +1,18 @@
+/* Wallpaper picker: same look as the main menu, laid out as a thumbnail grid */
+@import url("file:///home/aanonaaron/.config/wofi/style.css");
+
+#entry {
+  padding: 8px;
+  margin: 4px;
+  border-radius: 14px;
+}
+#entry box {
+  -gtk-orientation: vertical;
+}
+#img {
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+#text {
+  font-size: 11px;
+}

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Switch wallpaper with an animated awww transition, then re-theme everything with matugen.
+#   cycle-wallpaper          -> next image in ~/Pictures/Wallpapers
+#   cycle-wallpaper random   -> random image
+#   cycle-wallpaper FILE     -> that image
+dir="$HOME/Pictures/Wallpapers"
+state="$HOME/.cache/current-wallpaper"
+
+mapfile -t imgs < <(find "$dir" -maxdepth 1 -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' -o -iname '*.gif' \) | sort)
+(( ${#imgs[@]} )) || exit 1
+cur=$(cat "$state" 2>/dev/null)
+
+if [[ -f "$1" ]]; then
+  next="$1"
+elif [[ "$1" == random ]]; then
+  next="$cur"
+  while [[ "$next" == "$cur" && ${#imgs[@]} -gt 1 ]]; do next="${imgs[RANDOM % ${#imgs[@]}]}"; done
+else
+  next="${imgs[0]}"
+  for i in "${!imgs[@]}"; do
+    [[ "${imgs[i]}" == "$cur" ]] && next="${imgs[(i+1)%${#imgs[@]}]}"
+  done
+fi
+echo "$next" > "$state"
+
+# Start the daemon if it isn't running
+pgrep -x awww-daemon >/dev/null || { setsid awww-daemon >/dev/null 2>&1 & sleep 0.5; }
+
+# Grow the new wallpaper out from the mouse cursor
+pos=$(hyprctl cursorpos 2>/dev/null | tr -d ' ')
+awww img "$next" --resize crop \
+  --transition-type grow --transition-pos "${pos:-center}" --invert-y \
+  --transition-duration 1.2 --transition-fps 60 --transition-bezier .43,1.19,1,.4
+
+# Regenerate bar / menu / notification / lock / border / terminal colours
+command -v matugen >/dev/null && matugen image "$next" -m dark --prefer saturation >/dev/null 2>&1 &

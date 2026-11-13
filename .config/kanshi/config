@@ -1,0 +1,14 @@
+# Display profiles. kanshi picks the first profile whose outputs all match what is connected.
+# Find names with: hyprctl monitors   (laptop panel is eDP-1)
+
+# Laptop only
+profile laptop {
+    output eDP-1 enable scale 1.25
+}
+
+# Laptop + any one external monitor: external is the main screen on the left,
+# laptop panel sits to its right. Adjust position/scale to taste.
+profile docked {
+    output * enable position 0,0 scale 1
+    output eDP-1 enable scale 1.25 position 1920,0
+}

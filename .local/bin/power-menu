@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Power menu via wofi. Destructive actions ask for confirmation.
+choice=$(printf '%s\n' "Lock" "Suspend" "Log out" "Reboot" "Shut down" \
+  | wofi --dmenu --prompt "Power" --width 300 --height 270 --cache-file /dev/null) || exit 0
+
+confirm() {
+  [[ $(printf 'No\nYes\n' | wofi --dmenu --prompt "$1?" --width 300 --height 150 --cache-file /dev/null) == "Yes" ]]
+}
+
+case "$choice" in
+  "Lock")      pidof hyprlock || hyprlock ;;
+  "Suspend")   systemctl suspend ;;
+  "Log out")   confirm "Log out"  && uwsm stop ;;
+  "Reboot")    confirm "Reboot"   && systemctl reboot ;;
+  "Shut down") confirm "Shut down" && systemctl poweroff ;;
+esac

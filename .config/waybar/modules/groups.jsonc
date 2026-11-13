@@ -1,67 +1,30 @@
 {
   "group/distro-group": {
     "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 650,
-      "transition-left-to-right": true
-    },
-    "modules": [
-      "custom/distro",
-      "custom/terminal",
-      "custom/code",
-      "custom/obsidian",
-      "custom/office",
-      "custom/files",
-      "custom/spotify",
-      "custom/browser"
-    ]
+    "drawer": { "transition-duration": 650, "transition-left-to-right": true },
+    "modules": ["custom/distro", "custom/terminal", "custom/files", "custom/browser"]
   },
   "group/storage": {
     "orientation": "horizontal",
-    "modules": [
-      "disk",
-      "memory"
-    ]
+    "modules": ["disk", "memory"]
   },
   "group/system": {
     "orientation": "horizontal",
-    "modules": [
-      "temperature",
-      "cpu"
-    ]
+    "modules": ["temperature", "cpu"]
   },
   "group/audio": {
     "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 650,
-      "transition-left-to-right": false
-    },
-    "modules": [
-      "pulseaudio",
-      "pulseaudio/slider",
-      "pulseaudio#microphone"
-    ]
+    "drawer": { "transition-duration": 650, "transition-left-to-right": false },
+    "modules": ["pulseaudio", "pulseaudio/slider", "pulseaudio#microphone"]
   },
   "group/connections": {
     "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 500,
-      "transition-left-to-right": false
-    },
-    "modules": [
-      "network",
-      "bluetooth"
-    ]
+    "drawer": { "transition-duration": 500, "transition-left-to-right": false },
+    "modules": ["network", "bluetooth", "custom/tailscale"]
   },
   "group/tray-group": {
     "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 500,
-      "transition-left-to-right": false
-    },
-    "modules": [
-      "custom/tray-arrow",
-      "tray"
-    ]
+    "drawer": { "transition-duration": 500, "transition-left-to-right": false },
+    "modules": ["custom/tray-arrow", "tray"]
   }
 }

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Grid of wallpaper thumbnails in wofi; picking one applies it via cycle-wallpaper.
+dir="$HOME/Pictures/Wallpapers"
+cache="$HOME/.cache/wallpaper-thumbs"
+mkdir -p "$cache"
+
+menu=""
+while IFS= read -r img; do
+  name=$(basename "$img")
+  thumb="$cache/${name%.*}.png"
+  # (Re)build thumbnail if missing or older than the image
+  if [[ ! -f $thumb || $img -nt $thumb ]]; then
+    ffmpeg -loglevel error -y -i "$img" -frames:v 1 \
+      -vf "scale=320:180:force_original_aspect_ratio=increase,crop=320:180" "$thumb" || continue
+  fi
+  menu+="img:$thumb:text:$name"$'\n'
+done < <(find "$dir" -maxdepth 1 -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | sort)
+
+choice=$(printf '%s' "$menu" | wofi --dmenu --allow-images --columns 3 \
+  --width 1100 --height 640 --prompt "Wallpaper" --cache-file /dev/null \
+  --define image_size=320 --style "$HOME/.config/wofi/wallpaper-picker.css") || exit 0
+
+name=${choice##*:text:}
+[[ -f "$dir/$name" ]] && exec ~/.local/bin/cycle-wallpaper "$dir/$name"

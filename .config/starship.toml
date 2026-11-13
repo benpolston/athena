@@ -1,0 +1,46 @@
+# Colours use the terminal palette, so they follow the matugen theme.
+add_newline = true
+format = """$os$directory$git_branch$git_status$python$nodejs$rust$golang$c$java$cmd_duration
+$character"""
+
+[os]
+disabled = false
+style = "bold blue"
+symbols.Arch = "\uf303 "
+
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " 󰌾"
+
+[git_branch]
+symbol = "\ue0a0 "
+style = "bold purple"
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+style = "bold yellow"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+[cmd_duration]
+min_time = 2000
+style = "yellow"
+format = "took [$duration]($style) "
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol   = "[❯](bold red)"
+
+[python]
+symbol = "\ue235 "
+[nodejs]
+symbol = "\ue718 "
+[rust]
+symbol = "\ue7a8 "
+[golang]
+symbol = "\ue627 "
+[c]
+symbol = "\ue61e "
+[java]
+symbol = "\ue256 "

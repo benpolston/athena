@@ -2,53 +2,26 @@
   "hyprland/workspaces": {
     "format": "{icon} {windows}",
     "on-click": "activate",
-    "persistent-workspaces": {
-      "*": 5
-    },
+    "persistent-workspaces": { "*": 5 },
     "window-rewrite-default": "󰊠",
     "window-rewrite": {
-      // --- Work ---
       "kitty": "󰆍",
-      "onlyoffice": "󰏆",
-      "firefox": "",
-      "code": "󰨞",
-      "azahar": "",
-      "obsidian": "󰹕",
-      "mousepad": "󱓧",
-      // --- Apps ---
-      "discord": "",
-      "spotify": "",
-      "org.kde.kdeconnect.app": "󰦉",
-      "org.qbittorrent.qBittorrent": "󰘿",
-      // --- Graphics & Visual ---
-      "xdg-desktop-portal-gtk": "",
-      "thunar": "",
-      "yazi": "󰇥",
-      "imv": "󰄄",
-      "swappy": "󰄄",
-      "org.gnome.FileRoller": "",
-      "vlc": "󰕼",
+      "google-chrome": "",
+      "firefox": "",
+      "org.kde.dolphin": "",
+      "thunar": "",
       "mpv": "󰕼",
-      // --- System ---
-      "blueman-manager": "",
+      "vlc": "󰕼",
+      "blueman-manager": "",
       "pavucontrol": "󱕂",
-      "nm-connection-editor": "󰐻",
-      // --- Tool ---
-      "nwg-look": "󰒓",
-      "qt5ct": "󰒓",
-      "qt6ct": "󰒓",
-      "designer": "󰒓",
-      "linguist": "󰒓",
-      "assistant": "󰒓",
-      "pixeltool": "󰒓",
-      "qdbusviewer": "󰒓"
+      "nm-connection-editor": "󰐻"
     },
     "format-icons": {
       "active": "󰮯",
       "special": "󱁂",
       "default": "󰊠",
       "urgent": "󰧵",
-      "empty": ""
+      "empty": ""
     },
     "show-special": true,
     "all-outputs": true

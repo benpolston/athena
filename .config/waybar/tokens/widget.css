@@ -73,7 +73,8 @@
 #memory,
 #cpu,
 #temperature,
-#bluetooth {
+#bluetooth,
+#custom-tailscale {
   margin-right: 2px;
   padding: 0 8px;
 }

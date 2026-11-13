@@ -1,58 +1,53 @@
-# --- FASTFETCH ---
-fastfetch
+# ~/.zshrc
 
-# --- ALIASES ---
-alias ls='eza --icons --group-directories-first --color=always'
-alias ll='eza -lh --icons --group-directories-first'
-alias lt='eza --tree --level=2 --icons'
-alias la='eza -a --icons'
-alias lla='eza -lha --icons --group-directories-first'
-alias cd='z'
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR="${EDITOR:-nano}"
 
-# --- SETTINGS HISTORY ---
+# History
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
-setopt appendhistory
-setopt sharehistory
-#setopt CORRECT
+HISTSIZE=50000
+SAVEHIST=50000
+setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
 
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_REDUCE_BLANKS
+# Behaviour
+setopt AUTO_CD INTERACTIVE_COMMENTS
+bindkey -e                                   # emacs-style keys (Ctrl+A/E etc, like bash)
+bindkey '^[[1;5C' forward-word               # Ctrl+Right
+bindkey '^[[1;5D' backward-word              # Ctrl+Left
+bindkey '^[[H' beginning-of-line '^[[F' end-of-line '^[[3~' delete-char
 
+# Up/Down search history for what you've already typed
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search; zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search '^[[B' down-line-or-beginning-search
+
+# Completion: menu you can arrow through, case-insensitive
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.cache/zsh/
-typeset -U PATH path
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
-# --- FUNCTION ---
-if [ -f ~/.config/zsh/wallpaper.zsh ]; then
-    source ~/.config/zsh/wallpaper.zsh
-fi
+# Aliases
+alias ls='ls --color=auto'
+alias ll='ls -lah --color=auto'
+alias grep='grep --color=auto'
 
-# --- TOOLS & EXPORTS ---
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
-export EDITOR="nvim"
-eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
-eval "$(fzf --zsh)"
+# CTF helpers (bash-compatible)
+[ -f ~/.config/bash/ctf.sh ] && source ~/.config/bash/ctf.sh
 
-# --- PLUGINS ---
+# Plugins
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+# thefuck: type "fuck" to fix the last command
+command -v thefuck >/dev/null && eval "$(thefuck --alias)"
+
+# Prompt
+eval "$(starship init zsh)"
+
+# Greeting: only in a fresh top-level terminal window
+[[ $SHLVL -le 2 && -z $NO_FETCH && -n $KITTY_WINDOW_ID ]] && fastfetch
+
+# Must be last
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# --- CUSTOM PLUGIN STYLES ---
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#585b70'
-
-ZSH_HIGHLIGHT_STYLES[path]='none'
-ZSH_HIGHLIGHT_STYLES[path_prefix]='none'
-ZSH_HIGHLIGHT_STYLES[path_approx]='none'
-ZSH_HIGHLIGHT_STYLES[command-substitution-unquoted]='none'
-ZSH_HIGHLIGHT_STYLES[command-substitution-quoted]='none'
-
-ZSH_HIGHLIGHT_STYLES[number]='fg=#a6e3a1'
-ZSH_HIGHLIGHT_STYLES[option]='fg=#fab387'
-ZSH_HIGHLIGHT_STYLES[bracket]='fg=#f9e2af'

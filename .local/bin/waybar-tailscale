@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Waybar Tailscale module.
+#   waybar-tailscale          -> print status JSON for waybar
+#   waybar-tailscale toggle   -> connect / disconnect, then refresh the bar
+ICON_ON=$'\U000F0582'   # nf-md-vpn
+ICON_OFF=$'\U000F0583'  # nf-md-vpn (off)
+
+if [[ $1 == toggle ]]; then
+  state=$(tailscale status --json 2>/dev/null | jq -r .BackendState)
+  if [[ $state == Running ]]; then
+    tailscale down && notify-send -a Tailscale -i network-vpn "Tailscale" "Disconnected"
+  else
+    tailscale up --operator="$USER" && notify-send -a Tailscale -i network-vpn "Tailscale" "Connected"
+  fi
+  pkill -RTMIN+8 waybar
+  exit
+fi
+
+json=$(tailscale status --json 2>/dev/null)
+state=$(jq -r '.BackendState // "NoDaemon"' <<<"$json" 2>/dev/null)
+[[ -n $state ]] || state=NoDaemon
+
+if [[ $state == Running ]]; then
+  tooltip=$(jq -r '
+    "󰖂  Tailscale connected\n\(.Self.HostName)  \(.Self.TailscaleIPs[0])\n\n" +
+    ([.Peer[]] | sort_by([(.Online|not), .DNSName]) | map((if .Online then "●" else "○" end) + "  " + (.DNSName | split(".")[0]) +
+      (if .ExitNode then "  (exit node)" else "" end)) | join("\n")) +
+    "\n\nClick: disconnect · Right-click: admin console"' <<<"$json")
+  jq -cn --arg t "$ICON_ON" --arg tt "$tooltip" '{text:$t, tooltip:$tt, class:"connected"}'
+else
+  jq -cn --arg t "$ICON_OFF" --arg tt "Tailscale: $state\n\nClick: connect" '{text:$t, tooltip:$tt, class:"disconnected"}'
+fi
